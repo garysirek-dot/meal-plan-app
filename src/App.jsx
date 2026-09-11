@@ -1291,6 +1291,175 @@ function lsSet(key, val) {
 }
 
 // ─── COMPONENTS ───────────────────────────────────────────────────────────────
+// ─── RECIPE MODAL ─────────────────────────────────────────────────────────────
+function RecipeModal({ meal, theme, onClose }) {
+  const [recipe, setRecipe] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useState(() => {
+    let cancelled = false;
+    async function fetchRecipe() {
+      try {
+        const prompt = `You are a friendly cooking assistant helping someone who may be a beginner cook.
+
+Write a complete recipe for: "${meal.meal}"
+
+Description: ${meal.desc}
+Prep time: ${meal.prep}
+Approximate calories: ${meal.cal}
+
+Return ONLY valid JSON in this exact format, no markdown, no explanation:
+{
+  "servings": "2 servings",
+  "totalTime": "35 min",
+  "difficulty": "Easy",
+  "tip": "One short beginner tip for the trickiest part",
+  "ingredients": [
+    { "amount": "2", "unit": "lbs", "item": "chicken thighs" }
+  ],
+  "steps": [
+    { "num": 1, "title": "Preheat oven", "detail": "Preheat your oven to 400°F (200°C). Line a baking sheet with foil for easy cleanup." }
+  ]
+}
+
+Rules:
+- 4 to 7 ingredients
+- 4 to 6 steps, each with a short title and 1-2 sentence detail written for a beginner
+- difficulty: Easy, Medium, or Easy-Medium
+- Keep amounts realistic for 2 servings
+- The tip should address the most common mistake beginners make`;
+
+        const res = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "claude-sonnet-4-6",
+            max_tokens: 1000,
+            messages: [{ role: "user", content: prompt }]
+          })
+        });
+        const data = await res.json();
+        const text = data.content?.map(c => c.text || "").join("").trim();
+        const clean = text.replace(/```json|```/g, "").trim();
+        const parsed = JSON.parse(clean);
+        if (!cancelled) { setRecipe(parsed); setLoading(false); }
+      } catch (e) {
+        if (!cancelled) { setError("Couldn't load recipe. Try again."); setLoading(false); }
+      }
+    }
+    fetchRecipe();
+    return () => { cancelled = true; };
+  }, []);
+
+  const diffColor = { Easy:"#2E6B3E", Medium:"#B85C00", "Easy-Medium":"#1B5E7B" };
+
+  return (
+    <div onClick={onClose} style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.55)", zIndex:1000, display:"flex", alignItems:"flex-end", justifyContent:"center", backdropFilter:"blur(2px)" }}>
+      <div onClick={e => e.stopPropagation()} style={{ background:"#fff", borderRadius:"20px 20px 0 0", width:"100%", maxWidth:640, maxHeight:"88vh", overflowY:"auto", padding:"0 0 40px" }}>
+        {/* Handle */}
+        <div style={{ display:"flex", justifyContent:"center", padding:"12px 0 0" }}>
+          <div style={{ width:40, height:4, borderRadius:99, background:"#D0D5D3" }} />
+        </div>
+
+        {/* Header */}
+        <div style={{ padding:"14px 20px 16px", borderBottom:"1px solid #EEF0EF" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:10 }}>
+            <div style={{ flex:1 }}>
+              <div style={{ fontSize:11, fontWeight:700, color:theme.mid, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:4 }}>📖 Recipe</div>
+              <h2 style={{ margin:0, fontSize:18, fontWeight:900, color:"#1A1F1E", lineHeight:1.3 }}>{meal.meal}</h2>
+            </div>
+            <button onClick={onClose} style={{ background:"#F0F2F1", border:"none", borderRadius:99, width:32, height:32, cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>✕</button>
+          </div>
+
+          {recipe && !loading && (
+            <div style={{ display:"flex", gap:8, marginTop:12, flexWrap:"wrap" }}>
+              {[
+                { icon:"⏱", label:recipe.totalTime },
+                { icon:"👤", label:recipe.servings },
+                { icon:"📊", label:recipe.difficulty, color: diffColor[recipe.difficulty] || theme.primary },
+                { icon:"🔥", label:`${meal.cal} cal` },
+              ].map(b => (
+                <div key={b.label} style={{ background:"#F7F8F7", borderRadius:8, padding:"5px 10px", display:"flex", alignItems:"center", gap:5 }}>
+                  <span style={{ fontSize:13 }}>{b.icon}</span>
+                  <span style={{ fontSize:12, fontWeight:700, color: b.color || "#1A1F1E" }}>{b.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Body */}
+        <div style={{ padding:"16px 20px" }}>
+          {loading && (
+            <div style={{ textAlign:"center", padding:"40px 0", color:"#536065" }}>
+              <div style={{ fontSize:32, marginBottom:10, animation:"spin 1s linear infinite" }}>🍳</div>
+              <div style={{ fontWeight:700, fontSize:15, color:"#1A1F1E", marginBottom:4 }}>Building your recipe...</div>
+              <div style={{ fontSize:13 }}>Takes about 5 seconds</div>
+              <style>{`@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }`}</style>
+            </div>
+          )}
+
+          {error && (
+            <div style={{ textAlign:"center", padding:"30px 0", color:"#B85C00" }}>
+              <div style={{ fontSize:32, marginBottom:8 }}>⚠️</div>
+              <div style={{ fontWeight:700 }}>{error}</div>
+            </div>
+          )}
+
+          {recipe && !loading && (
+            <>
+              {/* Beginner tip */}
+              <div style={{ background:theme.accentLight, border:`1.5px solid ${theme.accent}44`, borderRadius:12, padding:"12px 14px", marginBottom:20, display:"flex", gap:10, alignItems:"flex-start" }}>
+                <span style={{ fontSize:20, flexShrink:0 }}>💡</span>
+                <div>
+                  <div style={{ fontSize:11, fontWeight:800, color:theme.accent, textTransform:"uppercase", letterSpacing:"0.05em", marginBottom:3 }}>Beginner tip</div>
+                  <div style={{ fontSize:13, color:"#1A1F1E", lineHeight:1.55 }}>{recipe.tip}</div>
+                </div>
+              </div>
+
+              {/* Ingredients */}
+              <div style={{ marginBottom:22 }}>
+                <h3 style={{ margin:"0 0 12px", fontSize:15, fontWeight:900, color:"#1A1F1E", display:"flex", alignItems:"center", gap:6 }}>
+                  <span style={{ width:6, height:6, borderRadius:99, background:theme.primary, display:"inline-block" }} />
+                  Ingredients
+                </h3>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6 }}>
+                  {recipe.ingredients.map((ing, i) => (
+                    <div key={i} style={{ background:"#F7F8F7", borderRadius:9, padding:"9px 12px", display:"flex", flexDirection:"column" }}>
+                      <span style={{ fontSize:13, fontWeight:800, color:"#1A1F1E" }}>{ing.amount} {ing.unit}</span>
+                      <span style={{ fontSize:12, color:"#536065", marginTop:1 }}>{ing.item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Steps */}
+              <div>
+                <h3 style={{ margin:"0 0 12px", fontSize:15, fontWeight:900, color:"#1A1F1E", display:"flex", alignItems:"center", gap:6 }}>
+                  <span style={{ width:6, height:6, borderRadius:99, background:theme.primary, display:"inline-block" }} />
+                  Steps
+                </h3>
+                <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                  {recipe.steps.map((step, i) => (
+                    <div key={i} style={{ display:"flex", gap:12, alignItems:"flex-start" }}>
+                      <div style={{ width:28, height:28, borderRadius:99, background:theme.primary, color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, fontWeight:900, flexShrink:0, marginTop:1 }}>{step.num}</div>
+                      <div style={{ flex:1, background:"#F7F8F7", borderRadius:10, padding:"10px 13px" }}>
+                        <div style={{ fontSize:13, fontWeight:800, color:"#1A1F1E", marginBottom:3 }}>{step.title}</div>
+                        <div style={{ fontSize:13, color:"#536065", lineHeight:1.6 }}>{step.detail}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Pill({ type }) {
   const t = TAG_MAP[type] || TAG_MAP.protein;
   return <span style={{ background:t.bg, color:t.tx, fontSize:10, fontWeight:700, padding:"2px 8px", borderRadius:20, whiteSpace:"nowrap" }}>{t.label}</span>;
@@ -1312,6 +1481,7 @@ function ShuffleMeal({ slot, dayId, pool, selections, onSelect, favs, onToggle, 
   const meal = pool[idx];
   const icons = { breakfasts:"☀️", lunches:"🥗", dinners:"🍳" };
   const labels = { breakfasts:"Morning", lunches:"Lunch", dinners:"Dinner" };
+  const [showRecipe, setShowRecipe] = useState(false);
 
   const shuffle = () => {
     let next = Math.floor(Math.random() * pool.length);
@@ -1321,6 +1491,7 @@ function ShuffleMeal({ slot, dayId, pool, selections, onSelect, favs, onToggle, 
 
   return (
     <div style={{ marginBottom:14 }}>
+      {showRecipe && <RecipeModal meal={meal} theme={theme} onClose={() => setShowRecipe(false)} />}
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
         <div style={{ display:"flex", alignItems:"center", gap:5 }}>
           <span>{icons[slot]}</span>
@@ -1342,9 +1513,13 @@ function ShuffleMeal({ slot, dayId, pool, selections, onSelect, favs, onToggle, 
         <span style={{ fontWeight:500, fontSize:13, color:theme.mid, marginLeft:6 }}>({meal.cal} cal)</span>
         {selections[key] !== undefined && <span style={{ fontSize:11, marginLeft:8, color:theme.accent, fontWeight:700 }}>✓ Locked in</span>}
       </div>
-      <div style={{ fontSize:13, color:"#536065", lineHeight:1.55, marginBottom:6 }}>{meal.desc}</div>
-      <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
+      <div style={{ fontSize:13, color:"#536065", lineHeight:1.55, marginBottom:8 }}>{meal.desc}</div>
+      <div style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap" }}>
         {meal.tags.map(t => <Pill key={t} type={t} />)}
+        <button onClick={() => setShowRecipe(true)}
+          style={{ marginLeft:"auto", background:"none", border:`1.5px solid ${theme.border}`, borderRadius:20, cursor:"pointer", padding:"3px 10px", fontSize:11, fontWeight:700, color:theme.primary, display:"flex", alignItems:"center", gap:4, whiteSpace:"nowrap" }}>
+          📖 Recipe
+        </button>
       </div>
     </div>
   );
