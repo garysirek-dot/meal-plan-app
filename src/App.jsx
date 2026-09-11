@@ -23,6 +23,13 @@ const THEMES = {
     border:"#DDD0EE", tagNote:"Low Fat · High Protein",
     dayHues:["#4A2D7A","#573595","#623DA0","#6B46AA","#7450B2","#5C3A9B","#4F3088","#6A44A8","#5E3D9E","#7254B5","#543292","#6840A5","#4C2E80","#6E48AC"],
   },
+  budget: {
+    id:"budget", label:"Budget",
+    primary:"#B85C00", mid:"#D97706", light:"#FFF4E6",
+    seafoam:"#FFE4C4", accent:"#E07A3A", accentLight:"#FDF0E8",
+    border:"#F5D9B8", tagNote:"$100-$125 · 2 Weeks · Real Food",
+    dayHues:["#B85C00","#C46500","#D07000","#D97706","#C96800","#B35800","#CC6C00","#D47500","#BF6200","#D07200","#C06300","#D57800","#BA5F00","#DC7A00"],
+  },
 };
 
 // ─── TAG STYLES ───────────────────────────────────────────────────────────────
@@ -576,6 +583,7 @@ const GROCERIES = {
     ]},
   },
 
+  budget: BUDGET_GROCERIES,
   mediterranean: {
     sun1:{ title:"Mediterranean — Week 1, Days 1–4", sections:[
       { cat:"Fish, Meat & Protein", icon:"🐟", items:["2 sea bass fillets","1 lb shrimp (fresh or frozen)","Canned tuna in olive oil (2 cans)","2 chicken breasts or thighs","Ground lamb (1 lb)","1 dozen eggs"] },
@@ -602,6 +610,196 @@ const GROCERIES = {
       { cat:"Pantry", icon:"🫙", items:["Baba ganoush (more)","Stuffed grape leaves (more)","Hummus (large tub)","More whole grain pita","More tahini","Olive oil (extra bottle)","Flaky sea salt","More honey","Saffron (if making paella)","Short-grain rice (paella)","Red wine (cooking)"] },
     ]},
   },
+};
+
+
+// ─── BUDGET DATA ──────────────────────────────────────────────────────────────
+const BUDGET_WEEK1 = [
+  {
+    day:"Sunday", date:"Day 1", theme:"Fresh Start",
+    morning:{ meal:"Scrambled Eggs on Toast", cal:310, desc:"2 eggs scrambled with a little butter, salt, and pepper. Served on whole grain toast. Add hot sauce if you like. Classic, filling, cheap.", prep:"5 min", tags:["protein","easy"] },
+    lunch:{ meal:"Lentil & Vegetable Soup (batch cook)", cal:320, desc:"Big pot: green lentils, diced carrots, celery, onion, canned tomatoes, chicken broth, cumin, garlic. Simmer 25 min. Eats all week for pennies.", prep:"30 min", tags:["protein","fiber"] },
+    dinners:[
+      { meal:"Baked Chicken Thighs + Roasted Potatoes + Green Beans", cal:490, desc:"Bone-in chicken thighs rubbed with garlic powder, paprika, salt. Roasted at 400°F with baby potatoes and green beans on the same pan. One pan, zero waste.", prep:"40 min", tags:["protein","fiber","meat"] },
+      { meal:"Ground Turkey Taco Bowls + Brown Rice + Black Beans", cal:510, desc:"Seasoned ground turkey over brown rice with canned black beans, salsa, shredded cheddar, and a dollop of plain Greek yogurt. Budget taco night.", prep:"25 min", tags:["protein","fiber","meat"] },
+      { meal:"Pasta + Turkey Meat Sauce + Parmesan", cal:530, desc:"Whole wheat pasta with a simple ground turkey and jarred marinara meat sauce. Parmesan on top. Feeds a crowd for under $3 a serving.", prep:"25 min", tags:["protein","meat"] },
+    ],
+    notes:"Cook a big pot of brown rice tonight — use it all week.",
+  },
+  {
+    day:"Monday", date:"Day 2", theme:"Simple & Strong",
+    morning:{ meal:"Oatmeal with Banana & Peanut Butter", cal:340, desc:"½ cup rolled oats cooked in water or milk. Top with half a sliced banana and 1 tbsp peanut butter. Stir it in. Filling and costs about 40 cents.", prep:"5 min", tags:["fiber","easy"] },
+    lunch:{ meal:"Lentil Soup (Leftover)", cal:320, desc:"Sunday's soup straight from the fridge in a thermos. Grab a slice of whole grain bread. Done.", prep:"0 min", tags:["protein","fiber","easy"] },
+    dinners:[
+      { meal:"Chicken Stir-Fry + Frozen Veggies + Brown Rice", cal:460, desc:"Chicken thighs sliced thin, stir-fried with a bag of frozen mixed veggies in soy sauce, garlic, and a drizzle of sesame oil. Over Sunday's rice.", prep:"20 min", tags:["protein","fiber","meat"] },
+      { meal:"Black Bean Quesadillas + Salsa + Greek Yogurt", cal:430, desc:"Whole wheat tortillas filled with canned black beans, shredded cheddar, and cumin. Pan-fried crispy. Salsa and Greek yogurt for dipping.", prep:"10 min", tags:["protein","fiber","veg","easy"] },
+      { meal:"Baked Chicken Drumsticks + Mashed Potatoes + Peas", cal:500, desc:"Drumsticks seasoned with garlic, paprika, and salt, baked at 400°F for 35 min. Simple mashed potatoes with butter. Canned or frozen peas.", prep:"40 min", tags:["protein","meat"] },
+    ],
+    notes:"Hard boil 6 eggs tonight for the week.",
+  },
+  {
+    day:"Tuesday", date:"Day 3", theme:"Midweek Value",
+    morning:{ meal:"Hard-Boiled Eggs + Apple", cal:220, desc:"2 hard-boiled eggs from last night + 1 apple. Eat on the go. One of the cheapest high-protein breakfasts possible.", prep:"0 min", tags:["protein","easy"] },
+    lunch:{ meal:"Tuna Salad Sandwich", cal:370, desc:"Canned tuna mixed with a little mayo, dijon, celery, and lemon. On whole grain bread with romaine. Canned tuna is one of the best budget proteins around.", prep:"5 min", tags:["protein","fish","easy"] },
+    dinners:[
+      { meal:"Turkey & Sweet Potato Skillet", cal:470, desc:"Ground turkey browned with diced sweet potato, black beans, cumin, chili powder, and garlic. One skillet, done in 20 min. Top with a little cheese.", prep:"20 min", tags:["protein","fiber","meat"] },
+      { meal:"Egg Fried Rice + Frozen Peas + Soy Sauce", cal:420, desc:"Day-old brown rice stir-fried with 2 scrambled eggs, frozen peas, soy sauce, and garlic. A classic budget meal that is genuinely delicious.", prep:"10 min", tags:["protein","fiber","easy"] },
+      { meal:"Baked Chicken Thighs + Roasted Carrots + Brown Rice", cal:480, desc:"More chicken thighs — cheapest protein per pound. Carrots roasted with olive oil and honey. Brown rice from Sunday's batch.", prep:"35 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"Cook extra rice or pasta tonight if running low.",
+  },
+  {
+    day:"Wednesday", date:"Day 4", theme:"Halfway There",
+    morning:{ meal:"Peanut Butter Toast + Banana", cal:320, desc:"2 slices whole grain toast spread with peanut butter. 1 banana on the side. One of the most nutritious cheap breakfasts you can eat.", prep:"3 min", tags:["fiber","easy"] },
+    lunch:{ meal:"Lentil Soup — Last of Batch", cal:320, desc:"Finish the Sunday pot. Squeeze in a little lemon if you have one. Whole grain crackers on the side.", prep:"0 min", tags:["protein","fiber","easy"] },
+    dinners:[
+      { meal:"Spaghetti + Meat Sauce + Garlic Bread", cal:540, desc:"Whole wheat spaghetti with a simple ground turkey or beef tomato sauce. Garlic bread made from a sliced baguette with butter and garlic powder.", prep:"25 min", tags:["protein","meat"] },
+      { meal:"Black Bean Soup + Corn Tortillas", cal:390, desc:"Canned black beans simmered with onion, garlic, cumin, chicken broth, and lime. Blend half for a thick soup. Corn tortillas for dipping.", prep:"20 min", tags:["protein","fiber","veg"] },
+      { meal:"Chicken & Rice Casserole", cal:510, desc:"Chicken thighs, brown rice, chicken broth, onion, garlic, and frozen peas all baked together at 375°F for 45 min. One dish, zero cleanup.", prep:"50 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"Thursday grocery run — check your list tonight.",
+  },
+  {
+    day:"Thursday", date:"Day 5", theme:"Second Half",
+    morning:{ meal:"Yogurt + Granola + Banana", cal:300, desc:"Plain Greek yogurt (buy the big tub — much cheaper per serving) + a small handful of granola + sliced banana. Fast and high protein.", prep:"2 min", tags:["protein","easy"] },
+    lunch:{ meal:"Peanut Butter & Banana Wrap", cal:350, desc:"Whole wheat tortilla spread with peanut butter, sliced banana, and a drizzle of honey. Roll it up. Sounds simple, keeps you going for hours.", prep:"2 min", tags:["fiber","easy"] },
+    dinners:[
+      { meal:"Chicken Thigh Stew + Potatoes + Carrots", cal:490, desc:"Chicken thighs simmered with diced potatoes, carrots, onion, garlic, and chicken broth. Season with thyme and black pepper. Hearty and cheap.", prep:"40 min", tags:["protein","fiber","meat"] },
+      { meal:"Tuna Noodle Casserole", cal:460, desc:"Egg noodles, canned tuna, frozen peas, cream of mushroom soup, and cheddar. Baked at 375°F for 25 min. A classic budget comfort dish.", prep:"35 min", tags:["protein","fish"] },
+      { meal:"Ground Turkey Chili + Cornbread", cal:530, desc:"Hearty chili with ground turkey, canned kidney beans, diced tomatoes, cumin, and chili powder. Made from a box of cornbread mix on the side.", prep:"35 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"Batch cook extra chicken tonight if you have time.",
+  },
+  {
+    day:"Friday", date:"Day 6", theme:"End of Week",
+    morning:{ meal:"Scrambled Eggs + Toast + Orange", cal:320, desc:"3 scrambled eggs with salt and pepper on whole grain toast. An orange on the side. Vitamin C, protein, fiber — budget win.", prep:"7 min", tags:["protein","easy"] },
+    lunch:{ meal:"Canned Tuna Over Crackers + Apple", cal:300, desc:"Canned tuna with a little hot sauce or mustard, eaten straight over whole grain crackers. An apple on the side. Fast, protein-packed, under $2.", prep:"3 min", tags:["protein","fish","easy"] },
+    dinners:[
+      { meal:"Baked Chicken Thighs + Garlic Mashed Potatoes + Corn", cal:510, desc:"Juicy baked chicken thighs with a simple garlic mashed potato and canned or frozen corn. A full dinner for about $2.50 per person.", prep:"40 min", tags:["protein","meat"] },
+      { meal:"Bean & Cheese Burritos + Salsa", cal:480, desc:"Whole wheat tortillas filled with refried beans, shredded cheddar, and rice. Microwave until melted. Jarred salsa on the side. Under $1 each.", prep:"8 min", tags:["protein","fiber","veg","easy"] },
+      { meal:"Turkey Burgers + Oven Fries + Coleslaw", cal:520, desc:"Lean ground turkey patties seasoned with garlic and Worcestershire. Oven-baked fries from russet potatoes. Simple coleslaw with cabbage and Greek yogurt dressing.", prep:"35 min", tags:["protein","meat"] },
+    ],
+    notes:"Weekend — take a breath and plan next week.",
+  },
+  {
+    day:"Saturday", date:"Day 7", theme:"Weekend Treat",
+    morning:{ meal:"Pancakes + Eggs + Maple Syrup", cal:420, desc:"Boxed pancake mix made with egg and milk — top with a little maple syrup. 2 fried eggs on the side. A real Saturday morning for under $2.", prep:"15 min", tags:["protein","easy"] },
+    lunch:{ meal:"Grilled Cheese + Tomato Soup", cal:450, desc:"Two slices whole grain bread with cheddar, grilled in butter until golden. Canned tomato soup on the side. The ultimate budget comfort lunch.", prep:"10 min", tags:["easy"] },
+    dinners:[
+      { meal:"Slow Cooker Chicken + Rice + Veggies", cal:490, desc:"Chicken thighs, chicken broth, garlic, onion, and frozen vegetables all cooked together in a slow cooker on low for 6 hours. Serve over rice. Set it and forget it.", prep:"10 min active", tags:["protein","fiber","meat"] },
+      { meal:"Homemade Pizza + Salad", cal:520, desc:"Store-bought pizza dough or English muffins as base. Jarred marinara, shredded mozzarella, and whatever toppings you have. Bake at 425°F for 12 min.", prep:"20 min", tags:["easy"] },
+      { meal:"Chicken & Vegetable Soup + Crusty Bread", cal:380, desc:"Simple chicken soup: leftover chicken or thighs, carrots, celery, onion, noodles or rice, chicken broth. Simmer 30 min. Crusty bread from the store.", prep:"35 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"Week 2 tomorrow — check your pantry before shopping.",
+  },
+];
+
+const BUDGET_WEEK2 = [
+  {
+    day:"Sunday", date:"Day 8", theme:"Week 2 Kickoff",
+    morning:{ meal:"Oatmeal with Peanut Butter & Honey", cal:350, desc:"½ cup oats cooked with water. Stir in 1 tbsp peanut butter and a drizzle of honey. Sprinkle of cinnamon. Cheap, warm, and filling.", prep:"5 min", tags:["fiber","easy"] },
+    lunch:{ meal:"White Bean & Kale Soup (batch cook)", cal:330, desc:"Big pot: canned white beans, kale, diced tomatoes, chicken broth, garlic, Italian seasoning, lemon. Simmer 20 min. Eat all week.", prep:"25 min", tags:["protein","fiber","veg"] },
+    dinners:[
+      { meal:"Baked Chicken Thighs + Roasted Sweet Potatoes + Broccoli", cal:500, desc:"Chicken thighs with garlic and paprika, roasted with sweet potato cubes and broccoli florets on one sheet pan at 400°F. Simple Sunday dinner.", prep:"40 min", tags:["protein","fiber","meat"] },
+      { meal:"Ground Turkey Stuffed Peppers + Brown Rice", cal:490, desc:"Bell peppers filled with seasoned ground turkey, brown rice, canned tomatoes, and cheddar. Baked at 375°F for 30 min.", prep:"40 min", tags:["protein","fiber","meat"] },
+      { meal:"Chicken Tortilla Soup + Corn Tortillas", cal:430, desc:"Shredded chicken, canned black beans, corn, diced tomatoes, chicken broth, cumin, chili powder. Top with crushed tortilla chips and Greek yogurt.", prep:"30 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"Cook a big batch of brown rice and boil 6 eggs tonight.",
+  },
+  {
+    day:"Monday", date:"Day 9", theme:"Locked In",
+    morning:{ meal:"Hard-Boiled Eggs + Peanut Butter Toast", cal:350, desc:"2 hard-boiled eggs from last night + 1 slice peanut butter toast. Fast, filling, and costs under a dollar.", prep:"0 min", tags:["protein","easy"] },
+    lunch:{ meal:"White Bean Soup (Leftover)", cal:330, desc:"Sunday's soup in a thermos. Gets better every day. Whole grain crackers on the side.", prep:"0 min", tags:["protein","fiber","easy"] },
+    dinners:[
+      { meal:"Turkey & Egg Fried Rice + Frozen Peas", cal:460, desc:"Ground turkey browned with garlic, mixed into day-old brown rice stir-fried with 2 eggs and frozen peas in soy sauce. One pan meal under $2.50 per serving.", prep:"15 min", tags:["protein","fiber","meat"] },
+      { meal:"Baked Potato + Broccoli + Cheddar + Greek Yogurt", cal:420, desc:"Large russet potato baked at 400°F for 50 min. Top with steamed broccoli, shredded cheddar, and Greek yogurt instead of sour cream. A full meal for $1.50.", prep:"55 min", tags:["fiber","easy","veg"] },
+      { meal:"Chicken & Noodle Soup + Bread", cal:400, desc:"Leftover chicken shredded into broth with egg noodles, carrots, celery, and onion. Simmer 15 min. Served with a slice of whole grain bread.", prep:"20 min", tags:["protein","meat"] },
+    ],
+    notes:"Make overnight oats tonight for Tuesday morning.",
+  },
+  {
+    day:"Tuesday", date:"Day 10", theme:"Steady Pace",
+    morning:{ meal:"Overnight Oats with Banana", cal:340, desc:"Made last night: ½ cup oats + ½ cup milk + 1 tbsp peanut butter + sliced banana on top. Grab from the fridge. Zero morning effort.", prep:"0 min", tags:["fiber","easy"] },
+    lunch:{ meal:"Tuna Salad on Crackers + Carrot Sticks", cal:310, desc:"Canned tuna mixed with a little mayo and mustard. Spread on whole grain crackers. Carrot sticks on the side. Under $2 and genuinely satisfying.", prep:"4 min", tags:["protein","fish","easy"] },
+    dinners:[
+      { meal:"Chicken Thigh Tacos + Black Beans + Cabbage", cal:490, desc:"Baked or pan-fried chicken thighs shredded into corn tortillas. Canned black beans, shredded cabbage, salsa, and Greek yogurt crema. Budget taco Tuesday.", prep:"30 min", tags:["protein","fiber","meat"] },
+      { meal:"Pasta + Garlic Olive Oil + White Beans + Parmesan", cal:470, desc:"Whole wheat pasta tossed with olive oil, lots of garlic, canned white beans, red pepper flakes, and parmesan. Aglio e olio on a budget.", prep:"15 min", tags:["protein","fiber","veg"] },
+      { meal:"Ground Turkey Stir-Fry + Frozen Veggies + Rice", cal:450, desc:"Ground turkey stir-fried with a bag of frozen Asian vegetables in soy sauce, garlic, and ginger. Over brown rice. Fast, cheap, and high protein.", prep:"20 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"Batch cook if you need more rice for the rest of the week.",
+  },
+  {
+    day:"Wednesday", date:"Day 11", theme:"Hump Day",
+    morning:{ meal:"Scrambled Eggs + Avocado Toast", cal:370, desc:"2 scrambled eggs on a slice of whole grain toast with mashed avocado, red pepper flakes, and salt. Feels fancy but costs under $1.50.", prep:"7 min", tags:["protein","fiber"] },
+    lunch:{ meal:"White Bean Soup — Last of Batch", cal:330, desc:"Finish the Sunday pot. Add a drizzle of olive oil on top. Whole grain bread for dipping.", prep:"0 min", tags:["protein","fiber","easy"] },
+    dinners:[
+      { meal:"Baked Chicken + Sweet Potato Mash + Steamed Broccoli", cal:490, desc:"Simple baked chicken thighs. Sweet potatoes boiled and mashed with butter and salt. Steamed broccoli with lemon. Three things, all cheap, all good.", prep:"40 min", tags:["protein","fiber","meat"] },
+      { meal:"Lentil & Potato Curry + Brown Rice", cal:450, desc:"Red or green lentils simmered with diced potatoes, canned tomatoes, curry powder, garlic, and coconut milk (optional). Served over brown rice. Under $1.50 per serving.", prep:"30 min", tags:["protein","fiber","veg"] },
+      { meal:"Cheesy Turkey & Broccoli Rice Casserole", cal:510, desc:"Ground turkey, broccoli, brown rice, chicken broth, and shredded cheddar all baked together at 375°F for 30 min. Comfort food on a budget.", prep:"40 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"Thursday grocery run — second and final shop of Week 2.",
+  },
+  {
+    day:"Thursday", date:"Day 12", theme:"Home Stretch",
+    morning:{ meal:"Yogurt + Peanut Butter + Banana", cal:310, desc:"Plain Greek yogurt with 1 tbsp peanut butter stirred in and a sliced banana on top. High protein, filling, and costs about 75 cents.", prep:"2 min", tags:["protein","easy"] },
+    lunch:{ meal:"Grilled Cheese + Tomato Soup", cal:440, desc:"Two slices whole grain bread with cheddar, grilled golden in butter. Canned tomato soup on the side. The budget lunch that never gets old.", prep:"10 min", tags:["easy"] },
+    dinners:[
+      { meal:"Chicken Drumsticks + Oven Roasted Potatoes + Green Beans", cal:500, desc:"Cheapest cut on the shelf. Drumsticks baked at 400°F for 35 min. Potato wedges and green beans on the same pan. Under $2 per serving.", prep:"40 min", tags:["protein","meat"] },
+      { meal:"Black Bean & Corn Quesadillas + Salsa + Avocado", cal:460, desc:"Whole wheat tortillas filled with black beans, corn, cumin, and cheddar. Pan-fried crispy. Sliced avocado and jarred salsa on the side.", prep:"10 min", tags:["protein","fiber","veg","easy"] },
+      { meal:"Turkey Meatball Soup + Pasta + Parmesan", cal:490, desc:"Small turkey meatballs simmered in chicken broth with ditalini pasta, carrots, and spinach. Parmesan on top. A meal in a bowl.", prep:"30 min", tags:["protein","meat"] },
+    ],
+    notes:"Two more days — you're almost at the finish line.",
+  },
+  {
+    day:"Friday", date:"Day 13", theme:"Final Push",
+    morning:{ meal:"Peanut Butter Oatmeal + Banana", cal:350, desc:"Oats cooked with water or milk, stirred with peanut butter and a sliced banana. The same breakfast that fuels marathon runners and budget warriors.", prep:"5 min", tags:["fiber","easy"] },
+    lunch:{ meal:"Egg Salad Sandwich + Carrot Sticks", cal:360, desc:"Hard-boiled eggs mashed with a little mayo, mustard, and celery. On whole grain bread with romaine. Carrot sticks on the side.", prep:"5 min", tags:["protein","easy"] },
+    dinners:[
+      { meal:"Baked Chicken Thighs + Garlic Rice + Roasted Zucchini", cal:480, desc:"Chicken thighs with garlic and lemon, baked at 400°F. Rice cooked in chicken broth for extra flavor. Zucchini roasted alongside.", prep:"40 min", tags:["protein","meat"] },
+      { meal:"Bean Burrito Bowl + Rice + Corn + Salsa", cal:460, desc:"Brown rice topped with seasoned canned pinto or black beans, frozen corn, salsa, shredded cheddar, and Greek yogurt crema. A Chipotle-style bowl at home for $1.50.", prep:"10 min", tags:["protein","fiber","veg","easy"] },
+      { meal:"Turkey & Vegetable Stew + Crusty Bread", cal:440, desc:"Ground turkey simmered with diced potatoes, carrots, onion, chicken broth, and Italian seasoning. Thick, hearty, and warming. Bread for soaking.", prep:"35 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"Last day tomorrow — make it a good one.",
+  },
+  {
+    day:"Saturday", date:"Day 14", theme:"Budget Win!",
+    morning:{ meal:"French Toast + Maple Syrup + Eggs", cal:410, desc:"Day-old bread dipped in egg and milk, pan-fried in butter. Maple syrup on top. A fried egg on the side. A celebration breakfast that costs $1.", prep:"12 min", tags:["protein","easy"] },
+    lunch:{ meal:"Big Protein Salad + Canned Tuna + Hard-Boiled Egg", cal:380, desc:"Romaine + canned tuna + hard-boiled egg + shredded carrots + cherry tomatoes + olive oil and vinegar dressing. A full meal under $2.", prep:"7 min", tags:["protein","fish","fiber"] },
+    dinners:[
+      { meal:"Celebration Roast Chicken + Mashed Potatoes + Roasted Veggies", cal:560, desc:"A whole roasted chicken — cheapest per-pound protein you can buy. Roasted at 425°F for 60 min. Fluffy mashed potatoes and roasted vegetables alongside. You made it through 2 weeks.", prep:"70 min", tags:["protein","fiber","meat"] },
+      { meal:"Chicken Thigh Piccata + Pasta + Green Beans", cal:530, desc:"Chicken thighs in a bright lemon-caper-white wine sauce. Whole wheat pasta. Green beans sautéed with garlic. A restaurant-quality dinner at budget cost.", prep:"30 min", tags:["protein","meat"] },
+      { meal:"Turkey Chili + Rice + Shredded Cheddar", cal:510, desc:"Your best batch of turkey chili yet — kidney beans, black beans, canned tomatoes, cumin, chili powder, garlic. Served over rice with cheddar and Greek yogurt. A 14-day budget victory dinner.", prep:"35 min", tags:["protein","fiber","meat"] },
+    ],
+    notes:"14 budget days done! You just proved eating well does not have to cost a fortune.",
+  },
+];
+
+// ─── BUDGET GROCERY LISTS ─────────────────────────────────────────────────────
+const BUDGET_GROCERIES = {
+  sun1:{ title:"Budget Plan — Week 1, Days 1–4", sections:[
+    { cat:"Meat & Protein", icon:"🥩", items:["6 bone-in chicken thighs (~$6)","1 lb ground turkey (~$4)","Canned tuna (4 cans, ~$4)","1 dozen eggs (~$3)","Plain Greek yogurt, large tub (~$5)"] },
+    { cat:"Produce", icon:"🥦", items:["1 bag carrots (~$1.50)","Celery (1 bunch, ~$1.50)","1 bag yellow onions (~$2)","2 sweet potatoes (~$2)","1 head broccoli (~$1.50)","1 bag russet potatoes (~$3)","1 bag frozen mixed vegetables (~$2)","1 bunch bananas (~$1.50)","2 apples","Romaine or bag salad (~$2)"] },
+    { cat:"Pantry & Grains", icon:"🫙", items:["Rolled oats (large container, ~$3)","Brown rice (2 lb bag, ~$2)","Whole wheat bread (~$3)","Whole wheat pasta (~$2)","Whole wheat tortillas (~$3)","Peanut butter (large jar, ~$4)","Canned black beans (3 cans, ~$3)","Canned kidney beans (1 can, ~$1)","Green lentils (1 lb dry, ~$2)","Canned diced tomatoes (3 cans, ~$3)","Jarred marinara (~$2)","Chicken broth (32 oz, ~$2)","Garlic (1 head, ~$0.50)","Olive oil (if needed)","Cumin, paprika, chili powder, Italian seasoning"] },
+    { cat:"Dairy", icon:"🥛", items:["Shredded cheddar cheese (~$3)","Butter (~$3)","Milk (~$3)"] },
+  ]},
+  thu1:{ title:"Budget Plan — Week 1, Days 5–7", sections:[
+    { cat:"Meat & Protein", icon:"🥩", items:["4 chicken thighs or drumsticks (~$4)","More canned tuna (2 cans, ~$2)","Cream of mushroom soup (1 can, ~$1.50, for casserole option)","Egg noodles (1 bag, ~$2)"] },
+    { cat:"Produce", icon:"🥦", items:["More bananas","More apples","1 bag frozen corn (~$1.50)","1 bag frozen peas (~$1.50)","Cabbage (half head, ~$1)","Limes (2, ~$0.50)"] },
+    { cat:"Pantry", icon:"🫙", items:["Boxed pancake mix (~$2)","Boxed cornbread mix (~$1.50)","Canned tomato soup (2 cans, ~$2)","Maple syrup (small bottle, ~$3)","Tortilla chips (small bag, ~$2)","More jarred salsa (~$2)","Soy sauce (if not stocked)","Sesame oil (small bottle, if not stocked)"] },
+    { cat:"Dairy", icon:"🥛", items:["More eggs if running low","Mozzarella cheese (~$3, for pizza option)","Pizza dough or English muffins (~$2)"] },
+  ]},
+  sun2:{ title:"Budget Plan — Week 2, Days 8–11", sections:[
+    { cat:"Meat & Protein", icon:"🥩", items:["6 more bone-in chicken thighs (~$6)","1 lb ground turkey (~$4)","More canned tuna (3 cans, ~$3)","1 dozen eggs (~$3)","Canned white beans (3 cans, ~$3)"] },
+    { cat:"Produce", icon:"🥦", items:["More carrots and celery","1 bunch kale (~$1.50)","4 bell peppers (~$3)","2 more sweet potatoes (~$2)","1 head broccoli (~$1.50)","More bananas","More apples","Zucchini (2, ~$1.50)","Frozen broccoli (1 bag, ~$1.50)","Avocados (2, ~$2)"] },
+    { cat:"Pantry & Grains", icon:"🫙", items:["More brown rice if low (~$2)","More whole wheat pasta (~$2)","More canned black beans (2 cans, ~$2)","Canned pinto beans (1 can, ~$1)","Curry powder (~$2)","Coconut milk (1 can, ~$2, optional for curry)","Red lentils (1 lb, ~$2)","More canned diced tomatoes (2 cans, ~$2)","More chicken broth (32 oz, ~$2)","Ditalini or small pasta (~$2)"] },
+    { cat:"Dairy", icon:"🥛", items:["More shredded cheddar (~$3)","More plain Greek yogurt (~$5)","More butter if needed"] },
+  ]},
+  thu2:{ title:"Budget Plan — Week 2, Days 12–14", sections:[
+    { cat:"Meat & Protein", icon:"🥩", items:["Chicken drumsticks (4–6, ~$4)","More ground turkey (~$4)","1 whole chicken (~$7, celebration option)","More canned tuna (2 cans, ~$2)"] },
+    { cat:"Produce", icon:"🥦", items:["More potatoes (~$2)","Green beans (fresh or frozen, ~$1.50)","More zucchini","More bananas","Cherry tomatoes (small pint, ~$2)","Lemons (2, ~$1)","Day-old bread (French toast, ~$2)"] },
+    { cat:"Pantry", icon:"🫙", items:["Capers (small jar, ~$2, for piccata option)","White wine (cooking, ~$4, optional)","More salsa (~$2)","More tortillas (~$3)","More canned beans if low","Maple syrup if low"] },
+    { cat:"Dairy", icon:"🥛", items:["More eggs","More cheddar","More Greek yogurt if low"] },
+  ]},
 };
 
 // ─── COMPONENTS ───────────────────────────────────────────────────────────────
@@ -881,6 +1079,7 @@ const PLAN_DATA = {
   pescatarian:   { week1:PESC_WEEK1,  week2:PESC_WEEK2  },
   classic:       { week1:CLASS_WEEK1, week2:CLASS_WEEK2  },
   mediterranean: { week1:MED_WEEK1,   week2:MED_WEEK2   },
+  budget:        { week1:BUDGET_WEEK1, week2:BUDGET_WEEK2 },
 };
 
 export default function App() {
