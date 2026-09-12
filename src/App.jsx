@@ -1301,48 +1301,18 @@ function RecipeModal({ meal, theme, onClose }) {
     let cancelled = false;
     async function fetchRecipe() {
       try {
-        const prompt = `You are a friendly cooking assistant helping someone who may be a beginner cook.
-
-Write a complete recipe for: "${meal.meal}"
-
-Description: ${meal.desc}
-Prep time: ${meal.prep}
-Approximate calories: ${meal.cal}
-
-Return ONLY valid JSON in this exact format, no markdown, no explanation:
-{
-  "servings": "2 servings",
-  "totalTime": "35 min",
-  "difficulty": "Easy",
-  "tip": "One short beginner tip for the trickiest part",
-  "ingredients": [
-    { "amount": "2", "unit": "lbs", "item": "chicken thighs" }
-  ],
-  "steps": [
-    { "num": 1, "title": "Preheat oven", "detail": "Preheat your oven to 400°F (200°C). Line a baking sheet with foil for easy cleanup." }
-  ]
-}
-
-Rules:
-- 4 to 7 ingredients
-- 4 to 6 steps, each with a short title and 1-2 sentence detail written for a beginner
-- difficulty: Easy, Medium, or Easy-Medium
-- Keep amounts realistic for 2 servings
-- The tip should address the most common mistake beginners make`;
-
-        const res = await fetch("https://api.anthropic.com/v1/messages", {
+        const res = await fetch("/api/recipe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            model: "claude-sonnet-4-6",
-            max_tokens: 1000,
-            messages: [{ role: "user", content: prompt }]
+            mealName: meal.meal,
+            mealDesc: meal.desc,
+            mealPrep: meal.prep,
+            mealCal:  meal.cal,
           })
         });
-        const data = await res.json();
-        const text = data.content?.map(c => c.text || "").join("").trim();
-        const clean = text.replace(/```json|```/g, "").trim();
-        const parsed = JSON.parse(clean);
+        if (!res.ok) throw new Error(`API error ${res.status}`);
+        const parsed = await res.json();
         if (!cancelled) { setRecipe(parsed); setLoading(false); }
       } catch (e) {
         if (!cancelled) { setError("Couldn't load recipe. Try again."); setLoading(false); }
